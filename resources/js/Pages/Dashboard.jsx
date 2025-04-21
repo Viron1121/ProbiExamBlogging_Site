@@ -7,6 +7,8 @@ import '../../css/table.css';
 import CreateModal from './Actions/CreateModal';
 import EditModal from './Actions/EditModal';
 import ShowModal from './Actions/ShowModal';
+import axiosClient from '@/axios'; // Import the axiosClient for url of api
+import Pagination from './Pagination/Pagination';
 
 export default function Dashboard() {
 
@@ -18,14 +20,14 @@ export default function Dashboard() {
 
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/blogs").then((res) => {
+        axios.get(axiosClient.defaults.baseURL + "/blogs").then((res) => {
             console.log(res.data);
             setBlogsData(res.data);
         });
       }, []);
 
       const ReFetch = () => {
-        axios.get("http://127.0.0.1:8000/blogs").then((res) => {
+        axios.get(axiosClient.defaults.baseURL + "/blogs").then((res) => {
             setBlogsData(res.data);
         });
       };
@@ -124,7 +126,7 @@ export default function Dashboard() {
             allowOutsideClick: false
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/blogs/${id}`)
+                axios.delete(`${axiosClient.defaults.baseURL}/blogs/${id}`)
                     .then(() => {
                         Swal.fire({
                             title: 'Success!',
@@ -237,7 +239,7 @@ export default function Dashboard() {
                             </table>
                                 <div className='m-10 mt-0'>
                                     <div className='separator my-2'></div>
-                                    {/* <Pagination pagination={pagination} table={table} /> */}
+                                    <Pagination pagination={pagination} table={table} />
                                 </div>
                                 </div>
                         </div>

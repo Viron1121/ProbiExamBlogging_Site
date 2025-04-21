@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { Formik, Form, Field } from 'formik';
 
 function ShowModal({ rowValue, ...props }) {
   return (
@@ -52,13 +53,32 @@ function ShowModal({ rowValue, ...props }) {
               zIndex: 1
             }}
           >
-            <form className="comment-form">
-              <div className="form-group mb-2">
-                <label htmlFor="comment" className="form-label">Comment:</label>
-                <textarea className="form-control" id="comment" rows="2"></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary w-100">Submit</button>
-            </form>
+            <Formik
+                initialValues={{ comment: '' }}
+                onSubmit={(values, { resetForm }) => {
+                    console.log('Submitted comment:', values.comment);
+                    // You can replace this with an API call to save the comment
+                    resetForm(); // clears the form
+                }}
+                >
+                {({ isSubmitting }) => (
+                    <Form className="comment-form">
+                    <div className="form-group mb-2">
+                        <label htmlFor="comment" className="form-label">Comment:</label>
+                        <Field
+                        as="textarea"
+                        className="form-control"
+                        id="comment"
+                        name="comment"
+                        rows="2"
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Submit'}
+                    </button>
+                    </Form>
+                )}
+            </Formik>
           </div>
         </Modal.Body>
       </Modal>
