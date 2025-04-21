@@ -68,7 +68,7 @@ export default function Register() {
                         id="date_of_birth"
                         type="date"
                         name="date_of_birth"
-                        value={data.email}
+                        value={data.date_of_birth}
                         className="mt-1 block w-full"
                         onChange={(e) => setData('date_of_birth', e.target.value)}
                         required
